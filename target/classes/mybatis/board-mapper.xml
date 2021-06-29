@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="aboard">
+
+	<resultMap type="ABoardDto" id="boardMap">
+		<result property="bno" column="BNO"/>
+		<result property="bname" column="BNAME"/>
+		<result property="btitle" column="BTITLE"/>
+		<result property="bcontent" column="BCONTENT"/>
+		<result property="bdate" column="BDATE"/>
+	</resultMap>
+
+	<select id="selectList" resultMap="boardMap">
+		SELECT BNO, BNAME, BTITLE, BCONTENT, BDATE
+		FROM ABOARD
+		ORDER BY BNO DESC
+	</select>
+
+	<select id="selectOne" resultType="ABoardDto" parameterType="int">
+		SELECT BNO, BNAME, BTITLE, BCONTENT, BDATE
+		FROM ABOARD
+		WHERE BNO=#{bno}
+	</select>
+
+	<insert id="insert" parameterType="ABoardDto">
+		INSERT INTO ABOARD
+		VALUES(NOSEQ.NEXTVAL, #{bname}, #{bpw}, #{btitle}, #{bcontent},SYSDATE)
+	</insert>
+
+	<update id="update" parameterType="ABoardDto">
+		UPDATE ABOARD 
+		SET BTITLE = #{btitle}, BCONTENT = #{bcontent}
+		WHERE BNO=#{bno} 
+	</update>
+
+	<delete id="delete" parameterType="ABoardDto">
+	DELETE FROM ABOARD
+	WHERE BNO=#{bno}
+	</delete>
+
+
+
+</mapper>
